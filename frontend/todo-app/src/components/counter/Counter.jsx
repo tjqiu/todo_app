@@ -3,6 +3,34 @@ import PropTypes from 'prop-types'
 import './Counter.css'
 
 class Counter extends Component {
+  constructor() {
+    super();
+    this.state = {
+      counter : 0
+    }
+    this.increment = this.increment.bind(this);
+  }
+
+  render() {
+    return (
+      <div className="counter">
+        <CounterButton by={1} incrementMethod = {this.increment}></CounterButton>
+        <CounterButton by={5} incrementMethod = {this.increment}></CounterButton>
+        <CounterButton by={10} incrementMethod = {this.increment}></CounterButton>
+      </div>
+    );
+  }
+
+  increment(by) {
+    console.log(`increment by - ${by}`)
+    // this.setState({
+    //   counter : this.state.counter + this.props.by
+    // })
+  }
+}
+
+
+class CounterButton extends Component {
   //Define the initial state
   constructor() {
     super();
@@ -27,14 +55,15 @@ class Counter extends Component {
     this.setState({
       counter : this.state.counter + this.props.by
     })
+    this.props.incrementMethod(this.props.by)
   }
 }
 
-Counter.defaultProps = {
+CounterButton.defaultProps = {
   by : 1
 }
 
-Counter.propTypes = {
+CounterButton.propTypes = {
   by: PropTypes.number
 }
 
