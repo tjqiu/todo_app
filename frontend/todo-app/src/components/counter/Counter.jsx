@@ -17,15 +17,16 @@ class Counter extends Component {
         <CounterButton by={1} incrementMethod = {this.increment}></CounterButton>
         <CounterButton by={5} incrementMethod = {this.increment}></CounterButton>
         <CounterButton by={10} incrementMethod = {this.increment}></CounterButton>
+        <span className='count'>{this.state.counter}</span>
       </div>
     );
   }
 
   increment(by) {
     console.log(`increment by - ${by}`)
-    // this.setState({
-    //   counter : this.state.counter + this.props.by
-    // })
+    this.setState({
+      counter : this.state.counter + by
+    })
   }
 }
 
@@ -44,7 +45,7 @@ class CounterButton extends Component {
     return (
       <div className="counter">
         <button onClick={this.increment}>+{this.props.by}</button>
-        <span className='count'>{this.state.counter}</span>
+        {/*<span className='count'>{this.state.counter}</span>*/}
       </div>
     )
   }
