@@ -16,7 +16,7 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props)
         this.state= {
-            username: 'test',
+            username: 'test_username',
             password: ''
         }
 
@@ -52,7 +52,10 @@ class LoginComponent extends Component {
     // }
 
     loginClicked() {
-
+        if (this.state.username==='test_username' && this.state.password==='test_password')
+            console.log('Successful')
+        else
+            console.log('Failed')
     }
 
     render() {
