@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect, Route } from "react-router";
 import AuthenticationService from "./AuthenticationService.js";
 
 class LoginComponent extends Component {
@@ -44,7 +43,7 @@ class LoginComponent extends Component {
     // }
 
     loginClicked() {
-        if (this.state.username === 'test_username' && this.state.password === 'test_password') {
+        if (this.state.username === 'test_username' && this.state.password === '1') {
             AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
             this.props.history.push(`/welcome/${this.state.username}`)
             //this.setState({showSuccessMessage: true})
