@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 
 class TodoApp extends Component {
@@ -8,6 +8,7 @@ class TodoApp extends Component {
             <div className='TodoApp'>
                 <Router>
                     <>
+                    <HeaderComponent/>
                         <Switch>
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
@@ -15,6 +16,7 @@ class TodoApp extends Component {
                             <Route path="/todos" component={ListTodosComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
+                        <FooterComponent/>
                     </>
                 </Router>
                 {/*<LoginComponent />
@@ -27,6 +29,28 @@ class TodoApp extends Component {
 
 function ErrorComponent() {
     return <div>An Error Occured.</div>
+}
+
+
+class HeaderComponent extends Component {
+    render() {
+        return (
+            <div>
+                Header<hr/>
+            </div>
+        )
+    }
+}
+
+
+class FooterComponent extends Component {
+    render() {
+        return (
+            <div>
+                <hr />Footer
+            </div>
+        )
+    }
 }
 
 
@@ -81,7 +105,7 @@ class WelcomeComponent extends Component {
     render() {
         return <div>
             Welcome {this.props.match.params.name}. You can manage your todos <Link to="/todos">here</Link>.
-            </div>
+        </div>
     }
 }
 
