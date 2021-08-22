@@ -2,6 +2,10 @@ class AuthenticationService {
     registerSuccessfulLogin(username, password) {
         sessionStorage.setItem('authenticatedUser', username);
     }
+
+    logout() {
+        sessionStorage.removeItem('authenticatedUser');
+    }
 }
 
-export default AuthenticationService()
+export default new AuthenticationService()
