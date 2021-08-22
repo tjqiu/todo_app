@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import AuthenticationService from './AuthenticationService.js'
+import AuthenticatedRoute from './AuthenticatedRoute'
 
 
 class TodoApp extends Component {
@@ -13,9 +14,9 @@ class TodoApp extends Component {
                         <Switch>
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
-                            <Route path="/welcome/:name" component={WelcomeComponent} />
-                            <Route path="/todos" component={ListTodosComponent} />
-                            <Route path="/logout" component={LogoutComponent} />
+                            <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
+                            <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
+                            <AuthenticatedRoute path="/logout" component={LogoutComponent} />
                             <Route component={ErrorComponent} />
                         </Switch>
                         <FooterComponent/>
@@ -36,17 +37,19 @@ function ErrorComponent() {
 
 class HeaderComponent extends Component {
     render() {
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                     <div><a href="http://www.google.com" className="navbar-brand">Q</a></div>
                     <ul className="navbar-nav">
-                        <li><Link className="nav-link" to="/welcome/test_username">Home</Link></li>
-                        <li><Link className="nav-link" to="/todos">Todos</Link></li>
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/welcome/test_username">Home</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>}
                     </ul>
                     <ul className="navbar-nav navbar-collapse justify-content-end">
-                        <li><Link className="nav-link" to="/login">Login</Link></li>
-                        <li><Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>
+                        {!isUserLoggedIn && <li><Link className="nav-link" to="/login">Login</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/logout" onClick={AuthenticationService.logout}>Logout</Link></li>}
                     </ul>
                 </nav>
             </header>
@@ -102,17 +105,17 @@ class ListTodosComponent extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>id</th>
-                            <th>description</th>
-                            <th>is completed?</th>
-                            <th>target date</th>
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Is Completed?</th>
+                            <th>Target Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             this.state.todos.map(
                                 todo =>
-                                    <tr>
+                                    <tr key={todo.id}>
                                         <th>{todo.id}</th>
                                         <th>{todo.description}</th>
                                         <th>{todo.done.toString()}</th>
